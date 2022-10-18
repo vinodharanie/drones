@@ -6,7 +6,7 @@ To build and run
 
 Assumptions
 1) Medication image are stored in the s3 bucket and UI passes the image S3 bucket url.
-
+2) Medicine quantity is not considered
 
 
 First endpoint - http://localhost:8010/v1/drones -> POST
@@ -25,5 +25,5 @@ Third endpoint - http://localhost:8010/v1/drones/{droneId}/medications -> GET
 
 Forth endpoint - http://localhost:8010/v1/drones/states -> GET
 
-
+Fifth endpoint - http://localhost:8010/v1/drones/{droneId}/battery-capacitor -> GET
 

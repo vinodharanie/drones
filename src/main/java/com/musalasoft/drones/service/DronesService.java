@@ -4,6 +4,7 @@ import com.musalasoft.drones.dto.DroneDto;
 import com.musalasoft.drones.model.Medication;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -16,4 +17,6 @@ public interface DronesService {
     List<DroneDto> getDroneWithState();
 
     void loadMedications(long droneId, List<Long> medicationIds);
+
+    BigDecimal getDroneBatteryCapacity(long droneId);
 }

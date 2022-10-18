@@ -76,6 +76,16 @@ public class DronesImplService implements DronesService {
         }
     }
 
+    @Override
+    public BigDecimal getDroneBatteryCapacity(long droneId) {
+        try {
+            Drone drone = droneRepository.getReferenceById(droneId);
+            return drone.getBatteryCapacity();
+        } catch (Exception e) {
+            throw new DronesAPIException("Error occurred while fetching drone battery capacity");
+        }
+    }
+
     private void validateMedicationWeightLimit(List<Medication> medications, BigDecimal weightLimit) {
         BigDecimal sumWeight = BigDecimal.ZERO;
         for (Medication medication : medications) {

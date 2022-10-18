@@ -3,13 +3,11 @@ package com.musalasoft.drones.controller;
 import com.musalasoft.drones.dto.DroneDto;
 import com.musalasoft.drones.model.Medication;
 import com.musalasoft.drones.service.DronesService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -40,5 +38,10 @@ public class DispatchController {
     @GetMapping(value = "/states")
     public ResponseEntity<List<DroneDto>> getDronesWithLoadingStates() {
         return new ResponseEntity<>(dronesService.getDroneWithState(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{droneId}/battery-capacitor")
+    public ResponseEntity<BigDecimal> getDronesBatteryCapacity(@PathVariable long droneId) {
+        return new ResponseEntity<>(dronesService.getDroneBatteryCapacity(droneId), HttpStatus.OK);
     }
 }
