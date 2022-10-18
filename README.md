@@ -11,7 +11,8 @@ Assumptions
    Lightweight(1), Middleweight(2), Cruiserweight(3), Heavyweight(4)
 
 
-First endpoint - http://localhost:8010/v1/drones -> POST
+Endpoints
+1) http://localhost:8010/v1/drones -> POST
 {
 "serialNumber" : "testttt",
 "modelId" : "3",
@@ -20,12 +21,12 @@ First endpoint - http://localhost:8010/v1/drones -> POST
 "state" : "2"
 }
 
-Second endpoint - http://localhost:8010/v1/drones/{droneId}/medications -> PUT
+2) http://localhost:8010/v1/drones/{droneId}/medications -> PUT
 [1,4]
 
-Third endpoint - http://localhost:8010/v1/drones/{droneId}/medications -> GET
+3) http://localhost:8010/v1/drones/{droneId}/medications -> GET
 
-Forth endpoint - http://localhost:8010/v1/drones/states -> GET
+4) http://localhost:8010/v1/drones/states -> GET
 
-Fifth endpoint - http://localhost:8010/v1/drones/{droneId}/battery-capacitor -> GET
+5) http://localhost:8010/v1/drones/{droneId}/battery-capacitor -> GET
 
