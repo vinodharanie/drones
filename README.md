@@ -30,3 +30,5 @@ Endpoints
 
 5) http://localhost:8010/v1/drones/{droneId}/battery-capacitor -> GET
 
+*** To check the database -> http://localhost:8010/h2-console
+
