@@ -1,6 +1,7 @@
 package com.musalasoft.drones.controller;
 
 import com.musalasoft.drones.dto.DroneDto;
+import com.musalasoft.drones.model.Medication;
 import com.musalasoft.drones.service.DronesService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/drones")
-public class DroneController {
+public class DispatchController {
 
     @Autowired
     private DronesService dronesService;
@@ -25,9 +26,14 @@ public class DroneController {
         dronesService.createDrone(droneDto);
     }
 
-    @PutMapping(value = "/{droneId}")
+    @PutMapping(value = "/{droneId}/medications")
     @ResponseStatus(HttpStatus.OK)
     public void loadMedications(@PathVariable long droneId, @RequestBody List<Long> medicationIds) {
         dronesService.loadMedications(droneId, medicationIds);
+    }
+
+    @GetMapping(value = "/{droneId}/medications")
+    public ResponseEntity<List<Medication>> getMedications(@PathVariable long droneId) {
+        return new ResponseEntity<>(dronesService.getDroneMedication(droneId), HttpStatus.OK);
     }
 }

@@ -18,6 +18,8 @@ First endpoint - http://localhost:8010/v1/drones -> POST
 "state" : "2"
 }
 
-Second endpoint - http://localhost:8010/v1/drones/{droneId} -> PUT
+Second endpoint - http://localhost:8010/v1/drones/{droneId}/medications -> PUT
 [1,4]
+
+Third endpoint - http://localhost:8010/v1/drones/{droneId}/medications -> GET
 

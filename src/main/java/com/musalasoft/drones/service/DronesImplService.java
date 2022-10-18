@@ -39,10 +39,10 @@ public class DronesImplService implements DronesService {
     }
 
     @Override
-    public DroneDto getDrone(long droneId) {
+    public List<Medication> getDroneMedication(long droneId) {
         try {
             Drone drone = droneRepository.getReferenceById(droneId);
-            return convertToDroneDto(drone);
+            return drone.getMedications();
         } catch (Exception e) {
             throw new DronesAPIException("Error occurred while fetching drone");
         }

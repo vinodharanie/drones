@@ -1,6 +1,7 @@
 package com.musalasoft.drones.service;
 
 import com.musalasoft.drones.dto.DroneDto;
+import com.musalasoft.drones.model.Medication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface DronesService {
 
     void createDrone(DroneDto droneDto);
 
-    DroneDto getDrone(long droneId);
+    List<Medication> getDroneMedication(long droneId);
 
     void loadMedications(long droneId, List<Long> medicationIds);
 }
