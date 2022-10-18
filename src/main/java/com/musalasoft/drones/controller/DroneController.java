@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/drones")
@@ -24,8 +25,9 @@ public class DroneController {
         dronesService.createDrone(droneDto);
     }
 
-    @GetMapping(value = "/{droneId}")
-    public ResponseEntity<DroneDto> addDrone(@PathVariable long droneId) {
-        return new ResponseEntity<>(dronesService.getDrone(droneId), HttpStatus.OK);
+    @PutMapping(value = "/{droneId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void loadMedications(@PathVariable long droneId, @RequestBody List<Long> medicationIds) {
+        dronesService.loadMedications(droneId, medicationIds);
     }
 }

@@ -6,6 +6,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,16 +21,17 @@ public class Drone {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "serialNumber", unique = true)
+    @Column(name = "serial_number", unique = true)
     private String serialNumber;
 
     @OneToOne
     @JoinColumn(name="model_id")
     private Model model;
 
-    @Column(name = "weightLimit")
+    @Column(name = "weight_limit")
     private BigDecimal weightLimit;
 
+    @Column(name = "battery_capacity")
     private BigDecimal batteryCapacity;
 
     @Column(name = "state")
@@ -40,6 +42,6 @@ public class Drone {
             name = "drone_medication",
             joinColumns = @JoinColumn(name = "drone_id"),
             inverseJoinColumns = @JoinColumn(name = "medication_id"))
-    Set<Medication> medications;
+    List<Medication> medications;
 
 }

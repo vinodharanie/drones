@@ -24,6 +24,4 @@ public class DroneDto {
     private BigDecimal batteryCapacity;
 
     private int state;
-
-    private Set<Medication> medications;
 }

@@ -18,4 +18,6 @@ First endpoint - http://localhost:8010/v1/drones -> POST
 "state" : "2"
 }
 
-Second endpoint - http://localhost:8010/v1/drones/{droneId} -> GET
+Second endpoint - http://localhost:8010/v1/drones/{droneId} -> PUT
+[1,4]
+

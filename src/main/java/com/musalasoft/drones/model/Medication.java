@@ -27,10 +27,11 @@ public class Medication {
     @Column(name = "weight")
     private BigDecimal weight;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "code")
     private String code;
 
-    @Column(name = "imageUrl")
-    private String imageUrl;
 
 }

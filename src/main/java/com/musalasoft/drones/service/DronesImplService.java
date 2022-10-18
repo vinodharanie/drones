@@ -4,6 +4,7 @@ import com.musalasoft.drones.dto.DroneDto;
 import com.musalasoft.drones.enums.States;
 import com.musalasoft.drones.exception.DronesAPIException;
 import com.musalasoft.drones.model.Drone;
+import com.musalasoft.drones.model.Medication;
 import com.musalasoft.drones.model.Model;
 import com.musalasoft.drones.repository.DroneRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -11,8 +12,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class DronesImplService implements DronesService {
@@ -22,6 +23,9 @@ public class DronesImplService implements DronesService {
 
     @Autowired
     private ModelService modelService;
+
+    @Autowired
+    private MedicationService medicationService;
 
     @Override
     public void createDrone(DroneDto droneDto) {
@@ -41,6 +45,29 @@ public class DronesImplService implements DronesService {
             return convertToDroneDto(drone);
         } catch (Exception e) {
             throw new DronesAPIException("Error occurred while fetching drone");
+        }
+    }
+
+    @Override
+    public void loadMedications(long droneId, List<Long> medicationIds) {
+        Drone drone = droneRepository.getReferenceById(droneId);
+        List<Medication> medications = medicationService.getAllMedications(medicationIds);
+        validateMedicationWeightLimit(medications, drone.getWeightLimit());
+        try {
+            drone.setMedications(medications);
+            droneRepository.saveAndFlush(drone);
+        } catch (Exception e) {
+            throw new DronesAPIException("Error occurred while fetching drone");
+        }
+    }
+
+    private void validateMedicationWeightLimit(List<Medication> medications, BigDecimal weightLimit) {
+        BigDecimal sumWeight = BigDecimal.ZERO;
+        for (Medication medication : medications) {
+            sumWeight = sumWeight.add(medication.getWeight());
+        }
+        if (weightLimit.compareTo(sumWeight) < 0) {
+            throw new DronesAPIException("Drone's weight limit is " + weightLimit + "gr");
         }
     }
 
@@ -85,7 +112,6 @@ public class DronesImplService implements DronesService {
         DroneDto droneDto = new DroneDto();
         BeanUtils.copyProperties(drone, droneDto);
         droneDto.setModelId(drone.getModel().getId());
-        droneDto.setMedications(drone.getMedications());
         return droneDto;
     }
 }
