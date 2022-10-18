@@ -8,4 +8,5 @@ public interface DronesService {
 
     void createDrone(DroneDto droneDto);
 
+    DroneDto getDrone(long droneId);
 }

@@ -24,4 +24,8 @@ public class DroneController {
         dronesService.createDrone(droneDto);
     }
 
+    @GetMapping(value = "/{droneId}")
+    public ResponseEntity<DroneDto> addDrone(@PathVariable long droneId) {
+        return new ResponseEntity<>(dronesService.getDrone(droneId), HttpStatus.OK);
+    }
 }

@@ -6,12 +6,12 @@ import com.musalasoft.drones.exception.DronesAPIException;
 import com.musalasoft.drones.model.Drone;
 import com.musalasoft.drones.model.Model;
 import com.musalasoft.drones.repository.DroneRepository;
-import com.musalasoft.drones.repository.ModelRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 
 @Service
@@ -26,11 +26,21 @@ public class DronesImplService implements DronesService {
     @Override
     public void createDrone(DroneDto droneDto) {
         validateDroneInput(droneDto);
-        Drone drone = covertToDrone(droneDto);
+        Drone drone = convertToDrone(droneDto);
         try {
             droneRepository.saveAndFlush(drone);
         } catch (Exception e) {
-            throw new DronesAPIException("Error occurred while creating drones");
+            throw new DronesAPIException("Error occurred while creating drone");
+        }
+    }
+
+    @Override
+    public DroneDto getDrone(long droneId) {
+        try {
+            Drone drone = droneRepository.getReferenceById(droneId);
+            return convertToDroneDto(drone);
+        } catch (Exception e) {
+            throw new DronesAPIException("Error occurred while fetching drone");
         }
     }
 
@@ -63,11 +73,19 @@ public class DronesImplService implements DronesService {
         }
     }
 
-    private Drone covertToDrone (DroneDto droneDto) {
+    private Drone convertToDrone (DroneDto droneDto) {
         Model model = getModel(droneDto.getModelId());
         Drone drone = new Drone();
         BeanUtils.copyProperties(droneDto, drone);
         drone.setModel(model);
         return drone;
+    }
+
+    private DroneDto convertToDroneDto (Drone drone) {
+        DroneDto droneDto = new DroneDto();
+        BeanUtils.copyProperties(drone, droneDto);
+        droneDto.setModelId(drone.getModel().getId());
+        droneDto.setMedications(drone.getMedications());
+        return droneDto;
     }
 }
