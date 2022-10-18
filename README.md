@@ -23,3 +23,7 @@ Second endpoint - http://localhost:8010/v1/drones/{droneId}/medications -> PUT
 
 Third endpoint - http://localhost:8010/v1/drones/{droneId}/medications -> GET
 
+Forth endpoint - http://localhost:8010/v1/drones/states -> GET
+
+
+

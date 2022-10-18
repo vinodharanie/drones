@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,7 +45,21 @@ public class DronesImplService implements DronesService {
             Drone drone = droneRepository.getReferenceById(droneId);
             return drone.getMedications();
         } catch (Exception e) {
-            throw new DronesAPIException("Error occurred while fetching drone");
+            throw new DronesAPIException("Error occurred while fetching drone medications");
+        }
+    }
+
+    @Override
+    public List<DroneDto> getDroneWithState() {
+        try {
+            List<Drone> loadingStateDrones = droneRepository.findAllByStateAndBatteryCapacityGreaterThanEqual(States.LOADING.getValue(), new BigDecimal("24.99"));
+            List<DroneDto> droneDtos = new ArrayList<>();
+            for (Drone drone : loadingStateDrones) {
+                droneDtos.add(convertToDroneDto(drone));
+            }
+            return droneDtos;
+        } catch (Exception e) {
+            throw new DronesAPIException("Error occurred while fetching drone medications");
         }
     }
 
@@ -53,11 +68,11 @@ public class DronesImplService implements DronesService {
         Drone drone = droneRepository.getReferenceById(droneId);
         List<Medication> medications = medicationService.getAllMedications(medicationIds);
         validateMedicationWeightLimit(medications, drone.getWeightLimit());
+        drone.setMedications(medications);
         try {
-            drone.setMedications(medications);
             droneRepository.saveAndFlush(drone);
         } catch (Exception e) {
-            throw new DronesAPIException("Error occurred while fetching drone");
+            throw new DronesAPIException("Error occurred while loading medication to drone");
         }
     }
 

@@ -13,5 +13,7 @@ public interface DronesService {
 
     List<Medication> getDroneMedication(long droneId);
 
+    List<DroneDto> getDroneWithState();
+
     void loadMedications(long droneId, List<Long> medicationIds);
 }

@@ -36,4 +36,9 @@ public class DispatchController {
     public ResponseEntity<List<Medication>> getMedications(@PathVariable long droneId) {
         return new ResponseEntity<>(dronesService.getDroneMedication(droneId), HttpStatus.OK);
     }
+
+    @GetMapping(value = "/states")
+    public ResponseEntity<List<DroneDto>> getDronesWithLoadingStates() {
+        return new ResponseEntity<>(dronesService.getDroneWithState(), HttpStatus.OK);
+    }
 }
